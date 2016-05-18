@@ -1,6 +1,15 @@
+require_relative 'bitmap'
+require_relative 'parser'
+
 class Editor
   def initialize
     @on_exit = ->{ }
+    @bitmap = nil
+    @parser = Parser.new
+                .on(/^\s*X\s*$/) { @on_exit.call }
+                .on(/^\s*[?]\s*$/) { help }
+                .on(/^\s*I\s+(\d+)\s+(\d+)\s*$/) {|width, height| @bitmap = Bitmap.new(width.to_i, height.to_i); '' }
+                .on(/^\s*S\s*/) { show(@bitmap) }
   end
     
   def on_exit &block
@@ -9,11 +18,18 @@ class Editor
   end
   
   def parse(line)
-    return @on_exit.call if line =~ /^\s*X/
-    return help if line =~ /^\s*\?/
-    'unrecognised command :('
+    begin
+      @parser.parse(line)
+    rescue NoMatch
+      'unrecognised command :('
+    end
   end
 
+  private
+  def show(bitmap)
+    bitmap.image.map {|row| row.join}.join
+  end
+  
   def help
     <<-END
       ? - Help

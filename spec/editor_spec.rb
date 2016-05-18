@@ -17,7 +17,11 @@ describe "Interactive editor" do
     expect(@editor.parse('?')).to a_string_matching('X - Terminate')
   end
   
-  it "gices error on gibberish" do
+  it "gives error on gibberish" do
     expect(@editor.parse('blurgh!')).to eql('unrecognised command :(')
+  end
+  
+  it "can create a blank image" do
+    expect(@editor.parse('I 3 3')).to eq('')
   end
 end
