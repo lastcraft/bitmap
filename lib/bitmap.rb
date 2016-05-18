@@ -29,6 +29,13 @@ class Bitmap
     self
   end
   
+  def horizontal(x1, x2, y, colour)
+    x_ok(x1); x_ok(x2); y_ok(y)
+    x2, x1 = x1, x2 if x1 > x2
+    (x1..x2).each {|x| set!(x, y, colour) }
+    self
+  end
+
   private
   def set!(x, y, colour)
     @image[@height - y][x - 1] = colour

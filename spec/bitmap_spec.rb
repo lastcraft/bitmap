@@ -54,4 +54,8 @@ describe Bitmap do
     bitmap.vertical(1, 1, 4, 'X') rescue nil
     expect(bitmap.image).to eq([['O', 'O'], ['O', 'O']]);
   end
+  
+  it "draws horizontal lines" do
+    expect(Bitmap.new(3, 3).horizontal(2, 3, 1, 'X').image).to eq([['O', 'O', 'O'], ['O', 'O', 'O'], ['O', 'X', 'X']])
+  end
 end
