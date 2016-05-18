@@ -19,7 +19,7 @@ class Editor
                   ''
                 end
                 .on(/^\s*S\s*/) do
-                  bitmap.image.map {|row| row.join}.join("\n")
+                  bitmap.image.map(&:join).join("\n")
                 end
                 .on(/^\s*L\s+(\d+)\s+(\d+)\s+(.)\s*$/) do |x, y, colour|
                   bitmap.set(x.to_i, y.to_i, colour)
