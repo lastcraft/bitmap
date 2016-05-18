@@ -8,7 +8,7 @@ class Parser
   def parse(command)
     each_pattern do |pattern, callback|
       if result = pattern.match(command)
-          return callback.call(*result[1..-1]) if callback
+        return callback.call(*result[1..-1])
       end
     end
     raise NoMatch
@@ -21,6 +21,6 @@ class Parser
   
   private
   def each_pattern
-    @patterns.each {|pair| yield *pair }
+    @patterns.each {|pair| yield pair[0], pair[1] }
   end
 end

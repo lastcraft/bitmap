@@ -17,4 +17,24 @@ describe Parser do
     Parser.new.on(/Z/) { z = true }.parse('Z')
     expect(z).to be_truthy
   end
+  
+  it "triggers block appropriate to the action" do
+    y, z = false, false
+    Parser.new
+        .on(/Y/) { y = true }
+        .on(/Z/) { z = true }
+        .parse('Z')
+    expect(y).to be_falsy
+    expect(z).to be_truthy
+  end
+  
+  it "matches the first pattern only" do
+    y, z = false, false
+    Parser.new
+        .on(/Y/) { y = true }
+        .on(/Z/) { z = true }
+        .parse('ZY')
+    expect(y).to be_truthy
+    expect(z).to be_falsy
+  end
 end
