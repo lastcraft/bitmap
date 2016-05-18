@@ -19,4 +19,9 @@ describe Bitmap do
     expect { Bitmap.new(0, 1) }.to raise_error InvalidBitmapSize
     expect { Bitmap.new(1, 0) }.to raise_error InvalidBitmapSize
   end
+  
+  it "can set an individual pixel" do
+    expect(Bitmap.new(1, 1).set(1, 1, 'X').image).to eq([['X']])
+    expect(Bitmap.new(2, 2).set(2, 2, 'X').image).to eq([['O', 'O'], ['O', 'X']])
+  end
 end
