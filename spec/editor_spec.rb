@@ -21,6 +21,15 @@ describe "Interactive editor" do
     expect(@editor.parse('blurgh!')).to eql('unrecognised command :(')
   end
   
+  it "responds with an error if no image created yet" do
+    expect(@editor.parse('S')).to eq("no image created yet :(")
+  end
+  
+  it "responds with sizing error if image too big or zero size" do
+    expect(@editor.parse('I 0 1')).to eq("width and height between 1 and 250 :(")
+    expect(@editor.parse('I 1 251')).to eq("width and height between 1 and 250 :(")
+  end
+  
   it "can create a blank image" do
     expect(@editor.parse('I 3 3')).to eq('')
     expect(@editor.parse('S')).to eq("OOO\nOOO\nOOO")
@@ -32,6 +41,11 @@ describe "Interactive editor" do
     @editor.parse('V 1 1 3 A')
     @editor.parse('L 4 3 C')
     expect(@editor.parse('S')).to eq("AOOC\nAOOO\nABBB")
+  end
+  
+  it "gives a message when trying to draw outside the image" do
+    @editor.parse('I 4 3')
+    expect(@editor.parse('L 4 5 X')).to eq("number is out of bounds :(")
   end
   
   it "can clear the image" do

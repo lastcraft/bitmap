@@ -1,6 +1,8 @@
 require_relative 'bitmap'
 require_relative 'parser'
 
+class NoBitmap < RuntimeError; end
+
 class Editor
   def initialize
     @on_exit = ->{ }
@@ -17,22 +19,22 @@ class Editor
                   ''
                 end
                 .on(/^\s*S\s*/) do
-                  @bitmap.image.map {|row| row.join}.join("\n")
+                  bitmap.image.map {|row| row.join}.join("\n")
                 end
                 .on(/^\s*L\s+(\d+)\s+(\d+)\s+(.)\s*$/) do |x, y, colour|
-                  @bitmap.set(x.to_i, y.to_i, colour)
+                  bitmap.set(x.to_i, y.to_i, colour)
                   ''
                 end
                 .on(/^\s*V\s+(\d+)\s+(\d+)\s+(\d+)\s+(.)\s*$/) do |x, y1, y2, colour|
-                  @bitmap.vertical(x.to_i, y1.to_i, y2.to_i, colour)
+                  bitmap.vertical(x.to_i, y1.to_i, y2.to_i, colour)
                   ''
                 end
                 .on(/^\s*H\s+(\d+)\s+(\d+)\s+(\d+)\s+(.)\s*$/) do |x1, x2, y, colour|
-                  @bitmap.horizontal(x1.to_i, x2.to_i, y.to_i, colour)
+                  bitmap.horizontal(x1.to_i, x2.to_i, y.to_i, colour)
                   ''
                 end
                 .on(/^\s*C\s*$/) do
-                  @bitmap.clear
+                  bitmap.clear
                 end
   end
     
@@ -46,10 +48,21 @@ class Editor
       @parser.parse(line)
     rescue NoMatch
       'unrecognised command :('
+    rescue OutOfBounds
+      'number is out of bounds :('
+    rescue InvalidBitmapSize
+      'width and height between 1 and 250 :('
+    rescue NoBitmap
+      'no image created yet :('
     end
   end
 
   private
+  def bitmap
+    raise NoBitmap unless @bitmap
+    @bitmap
+  end
+  
   def help
     <<-END
       ? - Help
