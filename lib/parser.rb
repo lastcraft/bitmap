@@ -1,5 +1,19 @@
 class NoMatch < RuntimeError; end
 
+module Tokens
+  def literal(token)
+    Regexp.escape(token)
+  end
+  
+  def number
+    '(\d+)'
+  end
+  
+  def letter
+    '(.)'
+  end
+end
+
 class Parser
   def initialize
     @patterns = []
@@ -14,7 +28,8 @@ class Parser
     raise NoMatch
   end
   
-  def on(pattern, &callback)
+  def on(*tokens, &callback)
+    pattern = Regexp.new('^\s*' + tokens.join('\s+') + '\s*$')
     @patterns << [pattern, callback]
     self
   end

@@ -5,35 +5,36 @@ class NoBitmap < RuntimeError; end
 
 class Editor
   def initialize
+    extend Tokens
     @on_exit = ->{ }
     @bitmap = nil
     @parser = Parser.new
-                .on(/^\s*X\s*$/) do
+                .on('X') do
                   @on_exit.call
                 end
-                .on(/^\s*[?]\s*$/) do
+                .on(literal('?')) do
                   help
                 end
-                .on(/^\s*I\s+(\d+)\s+(\d+)\s*$/) do |width, height|
+                .on('I', number, number) do |width, height|
                   @bitmap = Bitmap.new(width.to_i, height.to_i)
                   ''
                 end
-                .on(/^\s*S\s*/) do
+                .on('S') do
                   bitmap.image.map(&:join).join("\n")
                 end
-                .on(/^\s*L\s+(\d+)\s+(\d+)\s+(.)\s*$/) do |x, y, colour|
+                .on('L', number, number, letter) do |x, y, colour|
                   bitmap.set(x.to_i, y.to_i, colour)
                   ''
                 end
-                .on(/^\s*V\s+(\d+)\s+(\d+)\s+(\d+)\s+(.)\s*$/) do |x, y1, y2, colour|
+                .on('V', number, number, number, letter) do |x, y1, y2, colour|
                   bitmap.vertical(x.to_i, y1.to_i, y2.to_i, colour)
                   ''
                 end
-                .on(/^\s*H\s+(\d+)\s+(\d+)\s+(\d+)\s+(.)\s*$/) do |x1, x2, y, colour|
+                .on('H', number, number, number, letter) do |x1, x2, y, colour|
                   bitmap.horizontal(x1.to_i, x2.to_i, y.to_i, colour)
                   ''
                 end
-                .on(/^\s*C\s*$/) do
+                .on('C') do
                   bitmap.clear
                   ''
                 end
