@@ -25,7 +25,7 @@ class Bitmap
   def vertical(x, y1, y2, colour)
     x_ok(x); y_ok(y1); y_ok(y2)
     y2, y1 = y1, y2 if y1 > y2
-    (y1..y2).each {|y| set(x, y, colour) }
+    (y1..y2).each {|y| set!(x, y, colour) }
     self
   end
   
