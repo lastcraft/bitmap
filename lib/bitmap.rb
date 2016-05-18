@@ -24,14 +24,14 @@ class Bitmap
   
   def vertical(x, y1, y2, colour)
     x_ok(x); y_ok(y1); y_ok(y2)
-    y2, y1 = y1, y2 if y1 > y2
+    y1, y2 = [y1, y2].sort
     (y1..y2).each {|y| set!(x, y, colour) }
     self
   end
   
   def horizontal(x1, x2, y, colour)
     x_ok(x1); x_ok(x2); y_ok(y)
-    x2, x1 = x1, x2 if x1 > x2
+    x1, x2 = [x1, x2].sort
     (x1..x2).each {|x| set!(x, y, colour) }
     self
   end
