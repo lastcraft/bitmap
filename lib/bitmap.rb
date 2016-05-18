@@ -43,11 +43,9 @@ class Bitmap
   
   def x_ok(x)
     raise OutOfBounds unless x > 0 and x <= @width
-    x
   end
   
   def y_ok(y)
     raise OutOfBounds unless y > 0 and y <= @height
-    y
   end
 end
