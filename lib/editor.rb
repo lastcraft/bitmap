@@ -35,6 +35,7 @@ class Editor
                 end
                 .on(/^\s*C\s*$/) do
                   bitmap.clear
+                  ''
                 end
   end
     
