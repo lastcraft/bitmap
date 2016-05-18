@@ -17,7 +17,7 @@ describe "Interactive editor" do
     expect(@editor.parse('?')).to a_string_matching('X - Terminate')
   end
   
-  it "triggers error block on gibberish" do
+  it "gices error on gibberish" do
     expect(@editor.parse('blurgh!')).to eql('unrecognised command :(')
   end
 end

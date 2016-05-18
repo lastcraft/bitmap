@@ -5,6 +5,7 @@ class Editor
     
   def on_exit &block
     @on_exit = block
+    self
   end
   
   def parse(line)
