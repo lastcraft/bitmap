@@ -27,6 +27,13 @@ describe Bitmap do
     expect(Bitmap.new(2, 2).set(2, 1, 'X').image).to eq([['O', 'O'], ['O', 'X']])
   end
   
+  it "throws if out of image bounds if setting invalid coordinates" do
+    expect { Bitmap.new(1, 1).set(1, 2, 'X') }.to raise_error OutOfBounds
+    expect { Bitmap.new(1, 1).set(1, 0, 'X') }.to raise_error OutOfBounds
+    expect { Bitmap.new(1, 1).set(2, 1, 'X') }.to raise_error OutOfBounds
+    expect { Bitmap.new(1, 1).set(0, 1, 'X') }.to raise_error OutOfBounds
+  end
+  
   it "can clear the whole bitmap" do
     expect(Bitmap.new(2, 2).set(2, 2, 'X').clear.image).to eq([['O', 'O'], ['O', 'O']])
   end
@@ -36,5 +43,15 @@ describe Bitmap do
     expect(Bitmap.new(3, 3).vertical(2, 3, 2, 'X').image).to eq([['O', 'X', 'O'], ['O', 'X', 'O'], ['O', 'O', 'O']])
     expect(Bitmap.new(3, 3).vertical(1, 1, 3, 'X').image).to eq([['X', 'O', 'O'], ['X', 'O', 'O'], ['X', 'O', 'O']])
     expect(Bitmap.new(3, 3).vertical(1, 3, 3, 'X').image).to eq([['X', 'O', 'O'], ['O', 'O', 'O'], ['O', 'O', 'O']])
+  end
+  
+  it "raises if trying to draw vertical lines out of bounds" do
+    expect { Bitmap.new(3, 3).vertical(2, 2, 4, 'X') }.to raise_error OutOfBounds
+  end
+  
+  it "going out of bounds does not leave inconsistent debri" do
+    bitmap = Bitmap.new(2, 2)
+    bitmap.vertical(1, 1, 4, 'X') rescue nil
+    expect(bitmap.image).to eq([['O', 'O'], ['O', 'O']]);
   end
 end
