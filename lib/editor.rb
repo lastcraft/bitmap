@@ -10,6 +10,9 @@ class Editor
                 .on(/^\s*[?]\s*$/) { help }
                 .on(/^\s*I\s+(\d+)\s+(\d+)\s*$/) {|width, height| @bitmap = Bitmap.new(width.to_i, height.to_i); '' }
                 .on(/^\s*S\s*/) { show(@bitmap) }
+                .on(/^\s*L\s+(\d+)\s+(\d+)\s+(.)\s*$/) {|x, y, colour| @bitmap.set(x.to_i, y.to_i, colour) }
+                .on(/^\s*V\s+(\d+)\s+(\d+)\s+(\d+)\s+(.)\s*$/) {|x, y1, y2, colour| @bitmap.vertical(x.to_i, y1.to_i, y2.to_i, colour) }
+                .on(/^\s*H\s+(\d+)\s+(\d+)\s+(\d+)\s+(.)\s*$/) {|x1, x2, y, colour| @bitmap.horizontal(x1.to_i, x2.to_i, y.to_i, colour) }
   end
     
   def on_exit &block
@@ -27,7 +30,7 @@ class Editor
 
   private
   def show(bitmap)
-    bitmap.image.map {|row| row.join}.join
+    bitmap.image.map {|row| row.join}.join("\n")
   end
   
   def help

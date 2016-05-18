@@ -23,5 +23,14 @@ describe "Interactive editor" do
   
   it "can create a blank image" do
     expect(@editor.parse('I 3 3')).to eq('')
+    expect(@editor.parse('S')).to eq("OOO\nOOO\nOOO")
+  end
+  
+  it "can draw things" do
+    @editor.parse('I 4 3')
+    @editor.parse('H 1 4 1 B')
+    @editor.parse('V 1 1 3 A')
+    @editor.parse('L 4 3 C')
+    expect(@editor.parse('S')).to eq("AOOC\nAOOO\nABBB")
   end
 end
