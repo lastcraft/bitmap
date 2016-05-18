@@ -58,4 +58,8 @@ describe Bitmap do
   it "draws horizontal lines" do
     expect(Bitmap.new(3, 3).horizontal(2, 3, 1, 'X').image).to eq([['O', 'O', 'O'], ['O', 'O', 'O'], ['O', 'X', 'X']])
   end
+  
+  it "raises if trying to draw horizontal lines out of bounds" do
+    expect { Bitmap.new(3, 3).horizontal(2, 4, 1, 'X') }.to raise_error OutOfBounds
+  end
 end
