@@ -37,4 +37,12 @@ describe Parser do
     expect(y).to be_truthy
     expect(z).to be_falsy
   end
+  
+  it "extracts sub patterns as block arguments" do
+    parser = Parser.new
+                .on(/add\s+(\d+)\s+(\d+)/) {|a, b| a.to_i + b.to_i }
+                .on(/subtract\s+(\d+)\s+(\d+)/) {|a, b| a.to_i - b.to_i }
+    expect(parser.parse('add 3 4') ).to eq(7)
+    expect(parser.parse('subtract 300 400') ).to eq(-100)
+  end
 end
