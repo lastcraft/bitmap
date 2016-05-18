@@ -6,7 +6,13 @@ class Bitmap
   def initialize(width, height)
     raise InvalidBitmapSize if width < 1 or width > 250
     raise InvalidBitmapSize if height < 1 or height > 250
-    @image = Array.new(height) { Array.new(width) {'O'}}
+    @width, @height = width, height
+    clear
+  end
+  
+  def clear
+    @image = Array.new(@height) { Array.new(@width) {'O'}}
+    self
   end
   
   def set(x, y, colour)

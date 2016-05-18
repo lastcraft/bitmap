@@ -24,4 +24,8 @@ describe Bitmap do
     expect(Bitmap.new(1, 1).set(1, 1, 'X').image).to eq([['X']])
     expect(Bitmap.new(2, 2).set(2, 2, 'X').image).to eq([['O', 'O'], ['O', 'X']])
   end
+  
+  it "can clear the whole bitmap" do
+      expect(Bitmap.new(2, 2).set(2, 2, 'X').clear.image).to eq([['O', 'O'], ['O', 'O']])
+  end
 end
