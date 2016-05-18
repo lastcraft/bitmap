@@ -33,4 +33,11 @@ describe "Interactive editor" do
     @editor.parse('L 4 3 C')
     expect(@editor.parse('S')).to eq("AOOC\nAOOO\nABBB")
   end
+  
+  it "can clear the image" do
+    expect(@editor.parse('I 3 3')).to eq('')
+    @editor.parse('H 1 3 1 X')
+    @editor.parse('C')
+    expect(@editor.parse('S')).to eq("OOO\nOOO\nOOO")
+  end
 end

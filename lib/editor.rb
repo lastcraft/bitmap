@@ -31,6 +31,9 @@ class Editor
                   @bitmap.horizontal(x1.to_i, x2.to_i, y.to_i, colour)
                   ''
                 end
+                .on(/^\s*C\s*$/) do
+                  @bitmap.clear
+                end
   end
     
   def on_exit &block
