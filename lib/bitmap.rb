@@ -38,7 +38,7 @@ class Bitmap
 
   private
   def set!(x, y, colour)
-    @image[@height - y][x - 1] = colour
+    @image[y - 1][x - 1] = colour
   end
   
   def x_ok(x)

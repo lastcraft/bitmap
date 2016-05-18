@@ -40,7 +40,7 @@ describe "Interactive editor" do
     @editor.parse('H 1 4 1 B')
     @editor.parse('V 1 1 3 A')
     @editor.parse('L 4 3 C')
-    expect(@editor.parse('S')).to eq("AOOC\nAOOO\nABBB")
+    expect(@editor.parse('S')).to eq("ABBB\nAOOO\nAOOC")
   end
   
   it "gives a message when trying to draw outside the image" do

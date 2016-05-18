@@ -22,9 +22,9 @@ describe Bitmap do
   
   it "can set an individual pixel" do
     expect(Bitmap.new(1, 1).set(1, 1, 'X').image).to eq([['X']])
-    expect(Bitmap.new(2, 2).set(1, 2, 'X').image).to eq([['X', 'O'], ['O', 'O']])
-    expect(Bitmap.new(2, 2).set(2, 2, 'X').image).to eq([['O', 'X'], ['O', 'O']])
-    expect(Bitmap.new(2, 2).set(2, 1, 'X').image).to eq([['O', 'O'], ['O', 'X']])
+    expect(Bitmap.new(2, 2).set(1, 2, 'X').image).to eq([['O', 'O'], ['X', 'O']])
+    expect(Bitmap.new(2, 2).set(2, 2, 'X').image).to eq([['O', 'O'], ['O', 'X']])
+    expect(Bitmap.new(2, 2).set(2, 1, 'X').image).to eq([['O', 'X'], ['O', 'O']])
   end
   
   it "throws if out of image bounds if setting invalid coordinates" do
@@ -39,10 +39,10 @@ describe Bitmap do
   end
   
   it "draws vertical lines" do
-    expect(Bitmap.new(3, 3).vertical(2, 2, 3, 'X').image).to eq([['O', 'X', 'O'], ['O', 'X', 'O'], ['O', 'O', 'O']])
-    expect(Bitmap.new(3, 3).vertical(2, 3, 2, 'X').image).to eq([['O', 'X', 'O'], ['O', 'X', 'O'], ['O', 'O', 'O']])
+    expect(Bitmap.new(3, 3).vertical(2, 2, 3, 'X').image).to eq([['O', 'O', 'O'], ['O', 'X', 'O'], ['O', 'X', 'O']])
+    expect(Bitmap.new(3, 3).vertical(2, 3, 2, 'X').image).to eq([['O', 'O', 'O'], ['O', 'X', 'O'], ['O', 'X', 'O']])
     expect(Bitmap.new(3, 3).vertical(1, 1, 3, 'X').image).to eq([['X', 'O', 'O'], ['X', 'O', 'O'], ['X', 'O', 'O']])
-    expect(Bitmap.new(3, 3).vertical(1, 3, 3, 'X').image).to eq([['X', 'O', 'O'], ['O', 'O', 'O'], ['O', 'O', 'O']])
+    expect(Bitmap.new(3, 3).vertical(1, 3, 3, 'X').image).to eq([['O', 'O', 'O'], ['O', 'O', 'O'], ['X', 'O', 'O']])
   end
   
   it "raises if trying to draw vertical lines out of bounds" do
@@ -56,7 +56,7 @@ describe Bitmap do
   end
   
   it "draws horizontal lines" do
-    expect(Bitmap.new(3, 3).horizontal(2, 3, 1, 'X').image).to eq([['O', 'O', 'O'], ['O', 'O', 'O'], ['O', 'X', 'X']])
+    expect(Bitmap.new(3, 3).horizontal(2, 3, 1, 'X').image).to eq([['O', 'X', 'X'], ['O', 'O', 'O'], ['O', 'O', 'O']])
   end
   
   it "raises if trying to draw horizontal lines out of bounds" do
