@@ -22,10 +22,19 @@ describe Bitmap do
   
   it "can set an individual pixel" do
     expect(Bitmap.new(1, 1).set(1, 1, 'X').image).to eq([['X']])
-    expect(Bitmap.new(2, 2).set(2, 2, 'X').image).to eq([['O', 'O'], ['O', 'X']])
+    expect(Bitmap.new(2, 2).set(1, 2, 'X').image).to eq([['X', 'O'], ['O', 'O']])
+    expect(Bitmap.new(2, 2).set(2, 2, 'X').image).to eq([['O', 'X'], ['O', 'O']])
+    expect(Bitmap.new(2, 2).set(2, 1, 'X').image).to eq([['O', 'O'], ['O', 'X']])
   end
   
   it "can clear the whole bitmap" do
-      expect(Bitmap.new(2, 2).set(2, 2, 'X').clear.image).to eq([['O', 'O'], ['O', 'O']])
+    expect(Bitmap.new(2, 2).set(2, 2, 'X').clear.image).to eq([['O', 'O'], ['O', 'O']])
+  end
+  
+  it "draws vertical lines" do
+    expect(Bitmap.new(3, 3).vertical(2, 2, 3, 'X').image).to eq([['O', 'X', 'O'], ['O', 'X', 'O'], ['O', 'O', 'O']])
+    expect(Bitmap.new(3, 3).vertical(2, 3, 2, 'X').image).to eq([['O', 'X', 'O'], ['O', 'X', 'O'], ['O', 'O', 'O']])
+    expect(Bitmap.new(3, 3).vertical(1, 1, 3, 'X').image).to eq([['X', 'O', 'O'], ['X', 'O', 'O'], ['X', 'O', 'O']])
+    expect(Bitmap.new(3, 3).vertical(1, 3, 3, 'X').image).to eq([['X', 'O', 'O'], ['O', 'O', 'O'], ['O', 'O', 'O']])
   end
 end

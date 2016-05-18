@@ -16,7 +16,13 @@ class Bitmap
   end
   
   def set(x, y, colour)
-    @image[x - 1][y - 1] = colour
+    @image[@height - y][x - 1] = colour
+    self
+  end
+  
+  def vertical(x, y1, y2, colour)
+    y2, y1 = y1, y2 if y1 > y2
+    (y1..y2).each {|y| set(x, y, colour) }
     self
   end
 end
